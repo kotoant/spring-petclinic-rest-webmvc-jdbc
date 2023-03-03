@@ -229,6 +229,32 @@ The [issue tracker](https://github.com/spring-petclinic/spring-petclinic-rest/is
 
 For pull requests, editor preferences are available in the [editor config](https://github.com/spring-petclinic/spring-petclinic-rest/blob/master/.editorconfig) for easy use in common text editors. Read more and download plugins at <http://editorconfig.org>.
 
+# Build service
 
+```bash
+./mvnw clean install
+```
 
+# Build docker image
 
+```bash
+./mvnw com.google.cloud.tools:jib-maven-plugin:dockerBuild
+```
+
+# Start docker compose
+
+```bash
+docker-compose up 
+```
+
+# Stop docker compose
+
+```bash
+docker-compose down -v
+```
+
+# Run k6 stress test
+
+```bash
+k6 run script.js -o experimental-prometheus-rw
+```
