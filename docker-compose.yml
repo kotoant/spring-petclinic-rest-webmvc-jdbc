@@ -19,6 +19,16 @@ services:
       timeout: 5s
       retries: 15
 
+  postgres-exporter:
+    image: quay.io/prometheuscommunity/postgres-exporter
+    ports:
+      - "9187:9187"
+    environment:
+      - DATA_SOURCE_NAME=postgresql://petclinic:petclinic@postgres:5432/petclinic?sslmode=disable
+    depends_on:
+      postgres:
+        condition: service_healthy
+
   petclinic:
     image: kotoant/spring-petclinic-rest-webmvc-jdbc
     cpus: 4
