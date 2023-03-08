@@ -25,7 +25,6 @@ import org.springframework.samples.petclinic.model.Visit;
 import org.springframework.samples.petclinic.rest.api.VisitsApi;
 import org.springframework.samples.petclinic.rest.dto.VisitDto;
 import org.springframework.samples.petclinic.service.ClinicService;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -53,7 +52,7 @@ public class VisitRestController implements VisitsApi {
     }
 
 
-    @PreAuthorize("hasRole(@roles.OWNER_ADMIN)")
+//    @PreAuthorize("hasRole(@roles.OWNER_ADMIN)")
     @Override
     public ResponseEntity<List<VisitDto>> listVisits() {
         List<Visit> visits = new ArrayList<>(this.clinicService.findAllVisits());
@@ -63,7 +62,7 @@ public class VisitRestController implements VisitsApi {
         return new ResponseEntity<>(new ArrayList<>(visitMapper.toVisitsDto(visits)), HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole(@roles.OWNER_ADMIN)")
+//    @PreAuthorize("hasRole(@roles.OWNER_ADMIN)")
     @Override
     public ResponseEntity<VisitDto> getVisit(Integer visitId) {
         Visit visit = this.clinicService.findVisitById(visitId);
@@ -73,7 +72,7 @@ public class VisitRestController implements VisitsApi {
         return new ResponseEntity<>(visitMapper.toVisitDto(visit), HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole(@roles.OWNER_ADMIN)")
+//    @PreAuthorize("hasRole(@roles.OWNER_ADMIN)")
     @Override
     public ResponseEntity<VisitDto> addVisit(VisitDto visitDto) {
         HttpHeaders headers = new HttpHeaders();
@@ -84,7 +83,7 @@ public class VisitRestController implements VisitsApi {
         return new ResponseEntity<>(visitDto, headers, HttpStatus.CREATED);
     }
 
-    @PreAuthorize("hasRole(@roles.OWNER_ADMIN)")
+//    @PreAuthorize("hasRole(@roles.OWNER_ADMIN)")
     @Override
     public ResponseEntity<VisitDto> updateVisit(Integer visitId, VisitDto visitDto) {
         Visit currentVisit = this.clinicService.findVisitById(visitId);
@@ -97,7 +96,7 @@ public class VisitRestController implements VisitsApi {
         return new ResponseEntity<>(visitMapper.toVisitDto(currentVisit), HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole(@roles.OWNER_ADMIN)")
+//    @PreAuthorize("hasRole(@roles.OWNER_ADMIN)")
     @Transactional
     @Override
     public ResponseEntity<VisitDto> deleteVisit(Integer visitId) {

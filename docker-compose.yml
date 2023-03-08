@@ -33,18 +33,29 @@ services:
     image: kotoant/spring-petclinic-rest-webmvc-jdbc
     cpus: 4
     mem_limit: 4096m
+    volumes:
+      - ./tmp:/tmp
     ports:
       - "9966:9966"
     command: >
-      --spring.profiles.active=postgresql,spring-data-jpa,project-loom
-      --spring.datasource.url=jdbc:postgresql://postgres/petclinic
+      --spring.profiles.active=postgresql,jdbc
+      --spring.datasource.url=jdbc:postgresql://35.228.146.134:5432/petclinic
+      --spring.sql.init.mode=always
       --spring.datasource.hikari.connection-test-query='select 1'
       --spring.datasource.hikari.connection-timeout=30000
       --spring.datasource.hikari.idle-timeout=300000
       --spring.datasource.hikari.max-lifetime=1800000
-      --spring.datasource.hikari.maximum-pool-size=95
+      --spring.datasource.hikari.maximum-pool-size=100
+      --server.tomcat.threads.max=100
+      --server.undertow.threads.io=4
+      --server.undertow.threads.worker=100
       --spring.datasource.hikari.minimum-idle=10
-      --spring.datasource.hikari.validation-timeout=5000
+      --spring.datasource.hikari.validation-timeout=300000
+      --spring.datasource.test-while-idle=true
+      --spring.datasource.validation-query='SELECT 1'
+      --spring.datasource.time-between-eviction-runs-millis=60000
+      --spring.datasource.remove-abandoned=true
+      --spring.datasource.remove-abandoned-timeout=60
     depends_on:
       postgres:
         condition: service_healthy
